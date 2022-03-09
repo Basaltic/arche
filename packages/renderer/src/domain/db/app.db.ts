@@ -1,5 +1,5 @@
 import type { Table } from 'dexie';
-import type { TApp, TDoc, TDocUpdate, TKnowledgeBase, TUser, TUserSetting } from './table';
+import type { TApp, TDoc, TDocUpdate, TUser, TUserSetting } from './table';
 import Dexie from 'dexie';
 import { createDecorator } from '../../../../shared/di/instantiation';
 
@@ -7,7 +7,6 @@ export interface IAppDb {
   app: Table<TApp>;
   users: Table<TUser>;
   userSetting: Table<TUserSetting>;
-  knowledgeBases: Table<TKnowledgeBase>;
   docUpdates: Table<TDocUpdate>;
   doc: Table<TDoc>;
 }
@@ -21,13 +20,9 @@ export class AppDb extends Dexie {
   app!: Table<TApp>;
 
   users!: Table<TUser>;
-
   userSetting!: Table<TUserSetting>;
 
-  knowledgeBases!: Table<TKnowledgeBase>;
-
   docUpdates!: Table<TDocUpdate>;
-
   doc!: Table<TDoc>;
 
   constructor() {

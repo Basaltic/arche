@@ -1,16 +1,12 @@
 import type { IProvider } from '../provider/provider.interface';
 import type { SyncableDocCollection } from './syncable-doc-collection';
-import { SyncableDoc, TSyncableDocOpts } from './syncable-doc';
-import { SyncableNode } from './syncable-node';
-import { SyncableNodeFragment } from './syncable-node-fragment';
-import { SyncableDocFactory } from './factory';
+import type { TSyncableDocOpts } from './syncable-doc';
+import type { SyncableNode } from './syncable-node';
+import type { SyncableNodeFragment } from './syncable-node-fragment';
+import type { SyncableDocFactory } from './factory';
 
-export type TSyncableKnowledgeBaseOpts = {
-  /**
-   * 知识库的id
-   */
-  guid: string;
-  rootNodeId?: string;
+export type TKnowledgeBaseOpts = {
+  rootNodeId: string;
   provider?: IProvider;
 } & TSyncableDocOpts;
 
@@ -21,29 +17,20 @@ export type TSyncableKnowledgeInfo = {
 /**
  * 知识库：A Tree Structure persist the relationship of nodes as content
  */
-export class SyncableKnowledgeBase extends SyncableDoc {
+export class KnowledgeBase {
   private factory: SyncableDocFactory;
   private docCollection: SyncableDocCollection;
 
   readonly rootNodeId: string;
 
-  constructor(opts: TSyncableKnowledgeBaseOpts, docCollection: SyncableDocCollection, factory: SyncableDocFactory) {
-    super(opts);
-
-    if (opts.rootNodeId) {
-      this.rootNodeId = opts.rootNodeId;
-    } else {
-      // 默认id
-      this.rootNodeId = `${opts.guid}_root_id`;
-    }
+  constructor(opts: TKnowledgeBaseOpts, docCollection: SyncableDocCollection, factory: SyncableDocFactory) {
+    this.rootNodeId = opts.rootNodeId;
 
     this.factory = factory;
     this.docCollection = docCollection;
 
     this.getRootNode();
     this.getFragment(this.rootNodeId);
-
-    this.getMap('info');
   }
 
   /**
@@ -105,7 +92,7 @@ export class SyncableKnowledgeBase extends SyncableDoc {
       this.docCollection.set(node.guid, node);
     }
 
-    fragment.insertAt(at, nodeIds);
+    fragment.insertAt(at, nodeIds, origin);
   }
 
   /**

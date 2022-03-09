@@ -1,6 +1,5 @@
 import type * as Y from 'yjs';
 import clamp from 'lodash/clamp';
-import { EventEmitter } from 'eventemitter3';
 import { SyncableDoc } from './syncable-doc';
 
 export type TFragmentEventType = 'change';
@@ -10,34 +9,42 @@ export type TSyncableNodeFragmentOpts = {
 };
 
 /**
- * 节点列表，用于管理子节点
+ * 节点列表，用于管理节点子节点之间的关系
  */
 export class SyncableNodeFragment extends SyncableDoc {
-  private eventRunner = new EventEmitter();
-
   constructor(opts: TSyncableNodeFragmentOpts) {
     super(opts);
 
     this.getArray('children');
   }
 
+  /**
+   * 获取子节点的长度
+   */
   get length() {
     return this.children.length;
   }
 
+  /**
+   * 获取子节点列表
+   */
   get childNodeIds(): string[] {
     return this.children.toArray();
   }
 
-  get children() {
+  /**
+   * shared type
+   */
+  private get children() {
     return this.getArray('children') as Y.Array<string>;
   }
 
-  /**
-   * 监听变更
-   */
-  onChange(cb: (event: Y.YArrayEvent<string>) => void) {
-    this.eventRunner.on('change', cb);
+  observe(f: (event: Y.YArrayEvent<string>) => void) {
+    this.getArray('children').observe(f);
+  }
+
+  unobserve(f: (event: Y.YArrayEvent<string>) => void) {
+    this.getArray('children').unobserve(f);
   }
 
   /**

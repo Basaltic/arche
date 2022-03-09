@@ -1,11 +1,12 @@
 import { Navigation } from '../model/navigation';
 import { Selection } from '../model/selection';
-import { SyncableKnowledgeBase } from '../model/syncable-knowledge-base';
+import { KnowledgeBase } from '../model/knowledge-base';
 import { History } from '../model/history';
 import { SyncableDocCollection } from '../model/syncable-doc-collection';
 import { SyncableDocFactory } from '../model/factory';
 import { Operations } from './operations';
-import { IProvider, ProviderManager } from '../provider/provider.interface';
+import type { IProvider } from '../provider/provider.interface';
+import { ProviderManager } from '../provider/provider.interface';
 import { EventEmitter } from 'eventemitter3';
 import { LocalPersistenceProvider } from '../provider/local-provider';
 
@@ -15,11 +16,7 @@ export type TKnowledgeBaseEditorStateOpts = {
   /**
    * 用户ID，
    */
-  uid?: string;
-  /**
-   * 需要编辑的知识库Id
-   */
-  knowledgeBaseId: string;
+  uid: string;
   /**
    * Doc Persistence & Syncer
    */
@@ -46,12 +43,12 @@ export class KnowledgeBaseEditorState {
   /**
    * Main Node Relationship as a Tree
    */
-  knowledgeBase: SyncableKnowledgeBase;
+  knowledgeBase: KnowledgeBase;
 
   /**
    * 回收站，也是一个特别的知识库
    */
-  trash: SyncableKnowledgeBase;
+  trash: KnowledgeBase;
 
   /**
    * 导航
@@ -69,7 +66,7 @@ export class KnowledgeBaseEditorState {
   events = new EventEmitter<'doc:delete'>();
 
   constructor(opts: TKnowledgeBaseEditorStateOpts) {
-    const { knowledgeBaseId, providers = [] } = opts;
+    const { uid } = opts;
 
     // - 初始化provider
     const localPersistenceProvider = new LocalPersistenceProvider();
@@ -92,32 +89,20 @@ export class KnowledgeBaseEditorState {
     // - initialize operations
     this.operations = new Operations(this);
 
-    // - initialize main knowledge base instance
-    this.knowledgeBase = new SyncableKnowledgeBase(
-      {
-        guid: knowledgeBaseId,
-        autoLoad: true,
-      },
-      this.docCollection,
-      this.factory
-    );
+    // - 初始化用户的知识库
+    const rootNodeId = `${uid}_root_id`;
+    this.knowledgeBase = new KnowledgeBase({ rootNodeId }, this.docCollection, this.factory);
 
     // - 初始化回收站
-    this.trash = new SyncableKnowledgeBase(
-      {
-        guid: 'trash',
-        autoLoad: false,
-      },
-      this.docCollection,
-      this.factory
-    );
+    const trashNodeId = `${uid}_trash_root_id`;
+    this.trash = new KnowledgeBase({ rootNodeId: trashNodeId }, this.docCollection, this.factory);
 
     // - 选中状态初始化
-    const selectionId = `selection_${knowledgeBaseId}`;
+    const selectionId = `selection_${uid}`;
     this.selection = new Selection({ guid: selectionId });
 
     // - 导航初始化
-    const navigationId = `navigation_${knowledgeBaseId}`;
+    const navigationId = `navigation_${uid}`;
     this.navigation = new Navigation({ guid: navigationId, autoLoad: true });
 
     // - add navigation to history (support undo/redo)

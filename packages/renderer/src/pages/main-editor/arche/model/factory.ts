@@ -1,8 +1,9 @@
 import { generateId } from '../base/id';
-import { IProvider } from '../provider/provider.interface';
-import { History } from './history';
-import { SyncableDocCollection } from './syncable-doc-collection';
-import { SyncableNode, TSyncableNodeMeta } from './syncable-node';
+import type { IProvider } from '../provider/provider.interface';
+import type { History } from './history';
+import type { SyncableDocCollection } from './syncable-doc-collection';
+import type { TSyncableNodeMeta } from './syncable-node';
+import { SyncableNode } from './syncable-node';
 import { SyncableNodeFragment } from './syncable-node-fragment';
 
 export type TSyncableFactorynOpts = {

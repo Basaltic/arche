@@ -31,28 +31,6 @@ export type TUserSetting = {
    * 用户ID
    */
   id: string;
-  /**
-   * 该用户当前编辑的知识库
-   */
-  currentKnowledgeBase: string;
-};
-
-/**
- * 知识库表定义
- */
-export type TKnowledgeBase = {
-  /**
-   * 知识库的id
-   */
-  id: string;
-  /**
-   * 用户Id;
-   */
-  uid: string;
-  /**
-   * 知识库的名称
-   */
-  name: string;
 };
 
 /**

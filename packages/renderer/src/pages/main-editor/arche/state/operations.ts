@@ -13,6 +13,26 @@ export class Operations {
   }
 
   /**
+   * 撤销
+   *
+   * @returns {Operations}
+   */
+  undo() {
+    this.state.history.undo();
+    return this;
+  }
+
+  /**
+   * 重放
+   *
+   * @returns {Operations}
+   */
+  redo() {
+    this.state.history.redo();
+    return this;
+  }
+
+  /**
    * Change Node Meta Info
    *
    * @param nodeId
@@ -78,7 +98,7 @@ export class Operations {
   insertNode(
     parentNodeId: string,
     at: number,
-    config: { meta: TSyncableNodeMeta; state: Record<string, any>; position: TSyncableNodePostiion },
+    config: { meta: TSyncableNodeMeta; state: Record<string, any>; position: TSyncableNodePostiion }
   ) {
     const node = this.state.factory.createNode(undefined, config);
     this.state.knowledgeBase.insertNodeAt(parentNodeId, at, [node]);

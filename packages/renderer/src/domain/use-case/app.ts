@@ -35,14 +35,13 @@ export class AppUseCase {
   /**
    * 初次使用 - 初始化用户
    */
-  async initializeApp(params: { kbName: string }) {
+  async initializeApp() {
     const userId = DEFAULT_USER_ID;
     await this.appDb.users.add({ id: userId, name: DEFAULT_USER_NAME });
 
     const kbid = this.idService.getId();
-    await this.appDb.knowledgeBases.add({ id: kbid, uid: userId, name: params.kbName });
 
-    await this.appDb.userSetting.add({ id: userId, currentKnowledgeBase: kbid });
+    await this.appDb.userSetting.add({ id: userId });
 
     await this.appDb.app.add({ id: DEFAULT_APP_ID, currentUser: userId });
 
