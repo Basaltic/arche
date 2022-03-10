@@ -2,7 +2,7 @@ import { createDecorator } from '../../../../shared/di/instantiation';
 import { UseCaseResp } from '../base/use-case-resp';
 import { IAppDb } from '../db/app.db';
 import type { TApp } from '../db/table';
-import { DEFAULT_APP_ID, DEFAULT_USER_ID, DEFAULT_USER_NAME } from '../lib/constants';
+import { DEFAULT_APP_ID, DEFAULT_USER_NAME } from '../lib/constants';
 import { IIdService } from '../service/id-service';
 
 export const IAppUseCase = createDecorator<AppUseCase>('IAppUseCase');
@@ -36,15 +36,13 @@ export class AppUseCase {
    * 初次使用 - 初始化用户
    */
   async initializeApp() {
-    const userId = DEFAULT_USER_ID;
+    const userId = this.idService.getUserId();
     await this.appDb.users.add({ id: userId, name: DEFAULT_USER_NAME });
-
-    const kbid = this.idService.getId();
 
     await this.appDb.userSetting.add({ id: userId });
 
     await this.appDb.app.add({ id: DEFAULT_APP_ID, currentUser: userId });
 
-    return UseCaseResp.success({ uid: userId, kbid });
+    return UseCaseResp.success({ uid: userId });
   }
 }

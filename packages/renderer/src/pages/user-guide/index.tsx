@@ -2,20 +2,16 @@ import React from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useUserGuideState } from './state';
 import { StepWelcome } from './containers/step-welcome';
-import { StepDone } from './containers/step-done';
-import { StepKnowledgeBaseSetting } from './containers/step-knowledge-base-setting';
 
 /**
  * User Guide Page
- *
- * 1. First Use Guide
- * 2. Set up knowledge base path (optional) & name
+ * - This Page will show at the first time
  */
 export const UserGuidePage = () => {
   const form = useForm();
   const { step } = useUserGuideState();
 
-  const steps = [<StepWelcome />, <StepKnowledgeBaseSetting />, <StepDone />];
+  const steps = [<StepWelcome />];
 
   return (
     <FormProvider {...form}>

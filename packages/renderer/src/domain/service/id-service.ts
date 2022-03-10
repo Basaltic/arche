@@ -8,6 +8,9 @@ export interface IIdService {
    */
   getUserId(): string;
 
+  /**
+   * Get Common Id
+   */
   getId(): string;
 }
 
