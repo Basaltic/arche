@@ -46,18 +46,8 @@ export class SyncableDocFactory {
     this.provider?.bind(syncableNode);
 
     // 3. 初始数据设置
-    if (meta && state && position) {
-      syncableNode.setup(meta, state, position);
-    } else if (meta) {
-      const now = new Date().getTime();
-      meta.createdTime = now;
-      meta.lastModified = now;
-      syncableNode.setMeta(meta);
-    } else if (state) {
-      syncableNode.setState(state);
-    } else if (position) {
-      syncableNode.setPosition(position);
-    }
+    const sharedTypeValues = { meta, state, position };
+    syncableNode.setAll(sharedTypeValues);
 
     // 4. undo manager 绑定
     this.history?.bind(syncableNode);

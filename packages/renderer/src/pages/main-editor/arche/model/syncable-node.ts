@@ -83,14 +83,17 @@ export class SyncableNode extends SyncableDoc {
    *
    * @param keyValues
    */
-  setAll(keyValues: { [key: string]: Record<string, any> }, origin?: any) {
+  setAll(keyValues: { [key: string]: Record<string, any> | undefined }, origin?: any) {
     this.transact(() => {
       const sharedTypeKeys = Object.keys(keyValues);
       for (const sharedTypeKey of sharedTypeKeys) {
         const sharedType = this.getMap(sharedTypeKey);
-        const keys = Object.keys(keyValues[sharedTypeKey]);
-        for (const key of keys) {
-          sharedType.set(key, keyValues[sharedTypeKey][key]);
+        const values = keyValues[sharedTypeKey];
+        if (values) {
+          const keys = Object.keys(values);
+          for (const key of keys) {
+            sharedType.set(key, values);
+          }
         }
       }
     }, origin);

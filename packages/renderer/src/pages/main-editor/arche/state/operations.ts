@@ -4,32 +4,15 @@ import type { KnowledgeBaseEditorState } from './state';
 
 /**
  * Operations to change state
+ *
+ * insert <-> delete
+ * update <-> update -> undo manager
  */
 export class Operations {
   private state: KnowledgeBaseEditorState;
 
   constructor(state: KnowledgeBaseEditorState) {
     this.state = state;
-  }
-
-  /**
-   * 撤销
-   *
-   * @returns {Operations}
-   */
-  undo() {
-    this.state.history.undo();
-    return this;
-  }
-
-  /**
-   * 重放
-   *
-   * @returns {Operations}
-   */
-  redo() {
-    this.state.history.redo();
-    return this;
   }
 
   /**
@@ -41,7 +24,7 @@ export class Operations {
    */
   changeMeta(nodeId: string, meta: Partial<TSyncableNodeMeta>) {
     const node = this.state.knowledgeBase.getNode(nodeId);
-    node.setMeta(meta, HISTORY_TRACTER_MARK);
+    node.set('meta', meta, HISTORY_TRACTER_MARK);
     return this;
   }
 
@@ -54,7 +37,7 @@ export class Operations {
    */
   changeState(nodeId: string, state: Record<string, any>) {
     const node = this.state.knowledgeBase.getNode(nodeId);
-    node.setState(state, HISTORY_TRACTER_MARK);
+    node.set('state', state, HISTORY_TRACTER_MARK);
     return this;
   }
 
@@ -66,7 +49,7 @@ export class Operations {
    */
   changePosition(nodeId: string, position: TSyncableNodePostiion) {
     const node = this.state.knowledgeBase.getNode(nodeId);
-    node.setPosition(position, HISTORY_TRACTER_MARK);
+    node.set('position', position, HISTORY_TRACTER_MARK);
     return this;
   }
 

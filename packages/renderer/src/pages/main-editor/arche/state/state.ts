@@ -119,7 +119,9 @@ export class KnowledgeBaseEditorState {
 
     try {
       command(this.operations);
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
 
     this.history.commit();
   }
