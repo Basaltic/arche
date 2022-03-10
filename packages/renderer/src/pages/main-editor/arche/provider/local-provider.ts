@@ -1,6 +1,6 @@
 import * as Y from 'yjs';
 import type { SyncableDoc } from '../model/syncable-doc';
-import type { KnowledgeBaseEditorState } from '../state/state';
+import type { ArcheEditorState } from '../state/state';
 import type { IProvider } from './provider.interface';
 import { getDocUseCase } from '/@/domain/hooks';
 
@@ -51,7 +51,7 @@ export class LocalPersistenceProvider implements IProvider {
    *
    * @param state
    */
-  async bindGlobal(state: KnowledgeBaseEditorState) {
+  async bindGlobal(state: ArcheEditorState) {
     state.events.on('doc:delete', () => {
       // TODO: 触发文档的删除
     });

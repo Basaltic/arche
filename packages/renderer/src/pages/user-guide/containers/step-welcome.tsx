@@ -12,9 +12,6 @@ export const StepWelcome = memo(() => {
 
   const [loading, setLoading] = useState(false);
 
-  /**
-   *
-   */
   const handleClickToInitialize = async () => {
     setLoading(true);
     try {

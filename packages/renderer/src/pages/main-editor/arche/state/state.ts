@@ -12,7 +12,7 @@ import { LocalPersistenceProvider } from '../provider/local-provider';
 
 export type TEditorStateEventType = 'update:node' | 'update:tree';
 
-export type TKnowledgeBaseEditorStateOpts = {
+export type TArcheEditorStateOpts = {
   /**
    * 用户ID，
    */
@@ -26,7 +26,7 @@ export type TKnowledgeBaseEditorStateOpts = {
 /**
  * 知识库编辑器状态
  */
-export class KnowledgeBaseEditorState {
+export class ArcheEditorState {
   /**
    * History
    */
@@ -65,7 +65,7 @@ export class KnowledgeBaseEditorState {
    */
   events = new EventEmitter<'doc:delete'>();
 
-  constructor(opts: TKnowledgeBaseEditorStateOpts) {
+  constructor(opts: TArcheEditorStateOpts) {
     const { uid } = opts;
 
     // - 初始化provider

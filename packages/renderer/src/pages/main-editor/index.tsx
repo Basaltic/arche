@@ -8,5 +8,5 @@ import { ArcheEditor } from './arche/view-react/arche-editor';
 export const MainEditorPage = () => {
   const params = useParams();
 
-  return <ArcheEditor uid={params.uid || ''} knowledgeBaseId={params.kbid || ''} />;
+  return <ArcheEditor uid={params.uid || ''} />;
 };

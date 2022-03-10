@@ -1,6 +1,6 @@
 import { HISTORY_TRACTER_MARK } from '../model/constants';
 import type { TSyncableNodeMeta, TSyncableNodePostiion } from '../model/syncable-node';
-import type { KnowledgeBaseEditorState } from './state';
+import type { ArcheEditorState } from './state';
 
 /**
  * Operations to change state
@@ -9,9 +9,9 @@ import type { KnowledgeBaseEditorState } from './state';
  * update <-> update -> undo manager
  */
 export class Operations {
-  private state: KnowledgeBaseEditorState;
+  private state: ArcheEditorState;
 
-  constructor(state: KnowledgeBaseEditorState) {
+  constructor(state: ArcheEditorState) {
     this.state = state;
   }
 

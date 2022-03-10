@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { KnowledgeBaseEditorState } from '../state/state';
+import { ArcheEditorState } from '../state/state';
 import { CanvasBoard } from './board/board';
 import { ElementCustomDragLayer } from './board/element/element-custom-drag-layer';
 import { ArcheStateContextProvider } from './hooks/context';
@@ -13,12 +13,12 @@ import { Menu } from './menu';
  * @param props
  * @returns
  */
-export const ArcheEditor = (props: { uid: string; knowledgeBaseId: string }) => {
-  const [state, setState] = useState<KnowledgeBaseEditorState | null>(null);
+export const ArcheEditor = (props: { uid: string }) => {
+  const [state, setState] = useState<ArcheEditorState | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const state = new KnowledgeBaseEditorState({ ...props });
+    const state = new ArcheEditorState({ ...props });
     setState(state);
     setLoading(false);
   }, []);
