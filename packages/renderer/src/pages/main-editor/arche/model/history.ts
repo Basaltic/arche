@@ -1,6 +1,5 @@
 import { UndoManager } from 'yjs';
-import { HISTORY_TRACTER_MARK } from './constants';
-import type { SyncableDoc } from './syncable-doc';
+import { SyncableDoc } from './syncable-doc';
 
 // TODO: 两种mutation
 // 1. 内容的变更 - 使用 undo manage 实现，只要记录doc id即可
@@ -31,9 +30,8 @@ export class History {
    * @param doc
    */
   bind(doc: SyncableDoc) {
-    const undoManager = new UndoManager(Array.from(doc.share.values()), {
-      trackedOrigins: new Set([HISTORY_TRACTER_MARK]),
-    });
+    // 默认跟踪所有的变更
+    const undoManager = new UndoManager(Array.from(doc.share.values()), {});
     this.undoManagerMap.set(doc.guid, undoManager);
 
     doc.on('updateV2', this.recordMutation.bind(this));

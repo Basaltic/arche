@@ -2,7 +2,10 @@ import React from 'react';
 import { NavigationContextProvider, useNavigationBinding } from '../hooks/navigation.hooks';
 import { ElementFragment } from './element-fragment';
 
-export const BoardContent = () => {
+/**
+ * 展示知识板内容
+ */
+export const KnowledgeBoardContent = () => {
   const { currentPath } = useNavigationBinding();
 
   const basePath = currentPath.slice(0, currentPath.length - 1);

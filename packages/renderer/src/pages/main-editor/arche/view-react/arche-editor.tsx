@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { ArcheEditorState } from '../state/state';
-import { CanvasBoard } from './board/board';
+import useSWR from 'swr';
+import { KnowledgeBaseEditorState } from '../state/state';
+import { KnowledgeBoard } from './board/board';
 import { ElementCustomDragLayer } from './board/element/element-custom-drag-layer';
 import { ArcheStateContextProvider } from './hooks/context';
 import { Menu } from './menu';
@@ -14,23 +15,20 @@ import { Menu } from './menu';
  * @returns
  */
 export const ArcheEditor = (props: { uid: string }) => {
-  const [state, setState] = useState<ArcheEditorState | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { uid } = props;
 
-  useEffect(() => {
-    const state = new ArcheEditorState({ ...props });
-    setState(state);
-    setLoading(false);
-  }, []);
+  const { data } = useSWR('init-state', () => {
+    return new KnowledgeBaseEditorState({ uid, knowledgeBaseId: uid });
+  });
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <ArcheStateContextProvider value={state}>
+      <ArcheStateContextProvider value={data as any}>
         {/* 菜单 */}
-        <Menu loading={loading} />
+        <Menu />
 
         {/* 画板 */}
-        <CanvasBoard loading={loading} />
+        <KnowledgeBoard />
 
         {/* Drag Layer */}
         <ElementCustomDragLayer />

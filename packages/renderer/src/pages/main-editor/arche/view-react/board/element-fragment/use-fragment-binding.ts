@@ -14,9 +14,9 @@ export function useFragmentBinding(id: string) {
   const fragment = knowledgeBase.getFragment(id);
 
   useEffect(() => {
-    fragment.observe(forceUpdate);
+    fragment.children.observe(forceUpdate);
     return () => {
-      fragment.unobserve(forceUpdate);
+      fragment.children.unobserve(forceUpdate);
     };
   }, [fragment]);
 

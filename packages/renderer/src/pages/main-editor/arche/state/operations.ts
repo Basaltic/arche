@@ -1,17 +1,14 @@
-import { HISTORY_TRACTER_MARK } from '../model/constants';
+import { HISTORY_NOT_TRACK_MARK } from '../model/constants';
 import type { TSyncableNodeMeta, TSyncableNodePostiion } from '../model/syncable-node';
-import type { ArcheEditorState } from './state';
+import type { KnowledgeBaseEditorState } from './state';
 
 /**
  * Operations to change state
- *
- * insert <-> delete
- * update <-> update -> undo manager
  */
 export class Operations {
-  private state: ArcheEditorState;
+  private state: KnowledgeBaseEditorState;
 
-  constructor(state: ArcheEditorState) {
+  constructor(state: KnowledgeBaseEditorState) {
     this.state = state;
   }
 
@@ -24,7 +21,7 @@ export class Operations {
    */
   changeMeta(nodeId: string, meta: Partial<TSyncableNodeMeta>) {
     const node = this.state.knowledgeBase.getNode(nodeId);
-    node.set('meta', meta, HISTORY_TRACTER_MARK);
+    node.setMeta(meta);
     return this;
   }
 
@@ -37,7 +34,7 @@ export class Operations {
    */
   changeState(nodeId: string, state: Record<string, any>) {
     const node = this.state.knowledgeBase.getNode(nodeId);
-    node.set('state', state, HISTORY_TRACTER_MARK);
+    node.setState(state);
     return this;
   }
 
@@ -49,7 +46,7 @@ export class Operations {
    */
   changePosition(nodeId: string, position: TSyncableNodePostiion) {
     const node = this.state.knowledgeBase.getNode(nodeId);
-    node.set('position', position, HISTORY_TRACTER_MARK);
+    node.setPosition(position);
     return this;
   }
 
@@ -65,8 +62,8 @@ export class Operations {
     const fromFg = this.state.knowledgeBase.getFragment(from.parentId);
     const toFg = this.state.knowledgeBase.getFragment(to.parentId);
 
-    fromFg.remove(from.at, HISTORY_TRACTER_MARK);
-    toFg.insertAtEnd([nodeId], HISTORY_TRACTER_MARK);
+    fromFg.remove(from.at);
+    toFg.insertAtEnd([nodeId]);
   }
 
   /**
@@ -81,11 +78,10 @@ export class Operations {
   insertNode(
     parentNodeId: string,
     at: number,
-    config: { meta: TSyncableNodeMeta; state: Record<string, any>; position: TSyncableNodePostiion }
+    config: { meta: TSyncableNodeMeta; state: Record<string, any>; position: TSyncableNodePostiion },
   ) {
     const node = this.state.factory.createNode(undefined, config);
-    this.state.knowledgeBase.insertNodeAt(parentNodeId, at, [node]);
-
+    this.state.knowledgeBase.insertAt(parentNodeId, at, [node.guid]);
     return this;
   }
 
@@ -98,7 +94,18 @@ export class Operations {
    */
   insertNodeToEnd(parentNodeId: string, config: { meta: TSyncableNodeMeta; state: Record<string, any>; position: TSyncableNodePostiion }) {
     const node = this.state.factory.createNode(undefined, config);
-    this.state.knowledgeBase.insertNodeAtEnd(parentNodeId, [node]);
+
+    // 重要：
+    // - 首先在回收站插入节点，但是不追踪历史变更
+    // - 然后把回收站的节点id，移动到主知识库中
+    // 这样变相的实现节点的删除，并且保证节点不会漏删，因为至少在回收站中有引用
+    this.state.trash.insertAtEndInRoot([node.guid], HISTORY_NOT_TRACK_MARK);
+
+    const fromFg = this.state.trash.getRootFragment();
+    const toFg = this.state.knowledgeBase.getFragment(parentNodeId);
+
+    fromFg.removeLast();
+    toFg.insertAtEnd([node.guid]);
 
     return this;
   }
@@ -107,10 +114,9 @@ export class Operations {
    * Move to Trash
    */
   removeNode(parentNodeId: string, at: number) {
-    const nodeTree = this.state.knowledgeBase;
-    nodeTree.removeNodeAt(parentNodeId, at);
-
-    // TODO: 移动到回收站
+    const nodeIdToRemove = this.state.knowledgeBase.getNodeIdAt(parentNodeId, at);
+    this.state.knowledgeBase.removeAt(parentNodeId, at);
+    this.state.trash.insertAtEndInRoot([nodeIdToRemove]);
     return this;
   }
 

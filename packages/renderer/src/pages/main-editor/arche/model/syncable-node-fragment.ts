@@ -1,4 +1,4 @@
-import type * as Y from 'yjs';
+import * as Y from 'yjs';
 import clamp from 'lodash/clamp';
 import { SyncableDoc } from './syncable-doc';
 
@@ -9,7 +9,7 @@ export type TSyncableNodeFragmentOpts = {
 };
 
 /**
- * 节点列表，用于管理节点子节点之间的关系
+ * 节点列表，用于管理子节点
  */
 export class SyncableNodeFragment extends SyncableDoc {
   constructor(opts: TSyncableNodeFragmentOpts) {
@@ -18,33 +18,16 @@ export class SyncableNodeFragment extends SyncableDoc {
     this.getArray('children');
   }
 
-  /**
-   * 获取子节点的长度
-   */
   get length() {
     return this.children.length;
   }
 
-  /**
-   * 获取子节点列表
-   */
   get childNodeIds(): string[] {
     return this.children.toArray();
   }
 
-  /**
-   * shared type
-   */
-  private get children() {
+  get children() {
     return this.getArray('children') as Y.Array<string>;
-  }
-
-  observe(f: (event: Y.YArrayEvent<string>) => void) {
-    this.getArray('children').observe(f);
-  }
-
-  unobserve(f: (event: Y.YArrayEvent<string>) => void) {
-    this.getArray('children').unobserve(f);
   }
 
   /**
@@ -101,5 +84,14 @@ export class SyncableNodeFragment extends SyncableDoc {
     this.transact(() => {
       this.children.delete(at, length);
     }, origin);
+  }
+
+  /**
+   * Pop last element
+   */
+  removeLast(origin?: any) {
+    this.transact(() => {
+      this.children.delete(this.children.length - 1);
+    });
   }
 }

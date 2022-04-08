@@ -1,5 +1,3 @@
-
-
 /**
  * Collection
  */
@@ -18,5 +16,3 @@ export class Collection<T> {
     return this.entries.delete(id);
   }
 }
-
-

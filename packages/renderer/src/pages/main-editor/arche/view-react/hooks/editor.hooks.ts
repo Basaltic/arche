@@ -1,6 +1,5 @@
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { EditorStateContext } from './context';
-import { useForceUpdate } from '../../../../../hooks/use-force-update';
 
 /**
  * 通过context获取编辑器的状态

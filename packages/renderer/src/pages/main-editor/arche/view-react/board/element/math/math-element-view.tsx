@@ -5,7 +5,7 @@ import type { TMathElementState } from '.';
 import katex from 'katex';
 import { useObserveElementState } from '../../../hooks/node.hooks';
 import { debounce } from 'lodash';
-import { useCommandExecutor, useCommands } from '../../../hooks/commands.hooks';
+import { useCommandExecutor, useCommands } from '../../../commands/commands.hooks';
 
 /**
  * Math Fomula Element View Component

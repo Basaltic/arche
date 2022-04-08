@@ -32,7 +32,7 @@ export const defaultUserGruideState: TUserGuideState = {
   step: 0,
 };
 
-export const [useUserGuideState, useUserGuideAction] = createStore<TUserGuideState>(defaultUserGruideState, {
+export const [useUserGuideState, useUserGuideAction] = createStore(defaultUserGruideState, {
   nextStep: (state: TUserGuideState) => {
     state.step += 1;
   },

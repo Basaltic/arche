@@ -6,16 +6,15 @@ import { PathNavigation } from './navigation';
 /**
  * All Menus
  */
-export const Menu = (props: { loading: boolean }) => {
-  const { loading } = props;
+export const Menu = () => {
   return (
     <>
-      {!loading && <PathNavigation />}
+      <PathNavigation />
 
-      {!loading && <ElementMenu />}
+      <ElementMenu />
 
       {/* FOR TEST */}
-      {!loading && <ActionMenu />}
+      <ActionMenu />
     </>
   );
 };

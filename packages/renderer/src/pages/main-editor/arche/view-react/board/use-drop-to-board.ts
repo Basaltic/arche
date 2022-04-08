@@ -1,6 +1,6 @@
 import type { XYCoord } from 'react-dnd';
 import { useDrop } from 'react-dnd';
-import { useCommandExecutor, useCommands } from '../hooks/commands.hooks';
+import { useCommandExecutor, useCommands } from '../commands/commands.hooks';
 
 /**
  *

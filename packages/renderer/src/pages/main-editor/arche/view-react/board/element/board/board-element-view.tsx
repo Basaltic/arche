@@ -3,7 +3,7 @@ import type { TBoardElementState } from '.';
 import type { TElementViewProps } from '../element.types';
 import { useElementMeta, useElementState } from '../../../hooks/node.hooks';
 import { useLocation } from '../../../hooks/navigation.hooks';
-import { useCommands } from '../../../hooks/commands.hooks';
+import { useCommandExecutor, useCommands } from '../../../commands/commands.hooks';
 import { BoardIconOutline } from '/@/components/icons/node/board-icon';
 import { hexToRgb } from '/@/utils/color';
 
@@ -13,6 +13,7 @@ import { hexToRgb } from '/@/utils/color';
 export const BoardElementView = memo((props: TElementViewProps) => {
   const { id } = props;
 
+  const commandExecutor = useCommandExecutor();
   const commands = useCommands();
   const boardMeta = useElementMeta(id);
   const boardState = useElementState<TBoardElementState>(id);
@@ -24,7 +25,7 @@ export const BoardElementView = memo((props: TElementViewProps) => {
   const fillColor = r * 0.299 + g * 0.587 + b * 0.114 > 186 ? '#2D3748' : '#E2E8F0';
 
   const doubleClickToNavigate = () => {
-    commands.navigate([...path, id]);
+    commandExecutor.execute(commands.navigate([...path, id]));
   };
 
   return (

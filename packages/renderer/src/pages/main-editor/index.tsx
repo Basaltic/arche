@@ -1,12 +1,18 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { PageLoading } from '/@/components/page-loading';
 import { ArcheEditor } from './arche/view-react/arche-editor';
+
+import { useParams } from 'react-router-dom';
 
 /**
  * 知识库编辑主视图页面
  */
-export const MainEditorPage = () => {
-  const params = useParams();
+export function MainEditorPage() {
+  const { uid } = useParams();
 
-  return <ArcheEditor uid={params.uid || ''} />;
-};
+  return (
+    <Suspense fallback={<PageLoading />}>
+      <ArcheEditor uid={uid || ''} />;
+    </Suspense>
+  );
+}

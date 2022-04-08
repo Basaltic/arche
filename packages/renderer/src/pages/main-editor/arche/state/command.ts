@@ -1,5 +1,5 @@
 import { Operations } from './operations';
-import { ArcheEditorState } from './state';
+import { KnowledgeBaseEditorState } from './state';
 
 /**
  * A command is just a pure function
@@ -11,6 +11,6 @@ import { ArcheEditorState } from './state';
 export type TCommand = (ops: Operations) => void;
 
 export interface ICommand {
-  readonly state: ArcheEditorState;
+  readonly state: KnowledgeBaseEditorState;
   execute(): void;
 }

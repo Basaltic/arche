@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { TSyncableNodeMeta, TSyncableNodePostiion } from '../../model/syncable-node';
-import { useForceUpdate } from '../../../../../hooks/use-force-update';
+import { useForceUpdate } from '/@/hooks/use-force-update';
 import { useArcheEditorState, useKnowlegeBase } from './editor.hooks';
 
 /**

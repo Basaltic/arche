@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
 import { TCommand } from '../../state/command';
-import type { Operations } from '../../state/operations';
-import { useArcheEditorState } from './editor.hooks';
+import { useArcheEditorState } from '../hooks/editor.hooks';
 
-import * as commands from '../commands/commands';
+import * as commands from './commands';
 
 export function useCommandExecutor() {
   const archeEditorState = useArcheEditorState();

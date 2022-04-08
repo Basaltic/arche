@@ -1,4 +1,4 @@
-import type { UndoManager } from 'yjs';
+import { UndoManager } from 'yjs';
 import type { IProvider } from '../provider/provider.interface';
 import type { SyncableDoc } from './syncable-doc';
 
@@ -12,6 +12,8 @@ export type TSyncableDocCollectionOpts = {
 export class SyncableDocCollection {
   private map = new Map<string, SyncableDoc>();
   private undoManagerMap = new Map<string, UndoManager>();
+
+  public isInTransaction = false;
 
   /**
    * 获取 doc 实例

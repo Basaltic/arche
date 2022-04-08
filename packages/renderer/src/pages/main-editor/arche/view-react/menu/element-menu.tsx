@@ -1,7 +1,7 @@
 import React from 'react';
 import { elementRegistry } from '../board/element/element-registry';
 import type { TElement } from '../board/element/element.types';
-import { useCommandExecutor, useCommands } from '../hooks/commands.hooks';
+import { useCommandExecutor, useCommands } from '../commands/commands.hooks';
 import { useStateQueries } from '../hooks/query.hooks';
 
 /**

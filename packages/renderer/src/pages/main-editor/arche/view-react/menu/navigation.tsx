@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { HiHome, HiChevronRight } from 'react-icons/hi';
 import { useArcheEditorState } from '../hooks/editor.hooks';
 import { useNodeBinding } from '../hooks/node.hooks';
-import { useCommands } from '../hooks/commands.hooks';
+import { useCommandExecutor, useCommands } from '../commands/commands.hooks';
 import { useNavigationBinding } from '../hooks/navigation.hooks';
 
 /**
@@ -30,11 +30,12 @@ function NavItem(props: { path: string[]; hasNext: boolean }) {
   const state = useArcheEditorState();
   const node = useNodeBinding(nodeId);
   const commands = useCommands();
+  const commandExecutor = useCommandExecutor();
 
   const isRoot = state.knowledgeBase.isRoot(nodeId);
 
   const onClickToNavigate = () => {
-    commands.navigate(path);
+    commandExecutor.execute(commands.navigate(path));
   };
 
   return (

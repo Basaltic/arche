@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useForceUpdate } from '../../../../../../hooks/use-force-update';
+import { useForceUpdate } from '/@/hooks/use-force-update';
 import { useSelection } from '../../hooks/editor.hooks';
 
 /**

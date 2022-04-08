@@ -1,3 +1,5 @@
+export type NodeId = string;
+
 /**
  * 节点（文档）的位置
  */

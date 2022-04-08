@@ -3,7 +3,10 @@
  */
 
 import { contextBridge } from 'electron';
+import { instantiation } from './instantiation';
+import { IAppDb } from './storage/db';
 
+const appdb = instantiation.invokeFunction((accessor) => accessor.get(IAppDb));
 
 /**
  * The "Main World" is the JavaScript context that your main renderer code runs in.
@@ -28,4 +31,6 @@ import { contextBridge } from 'electron';
  */
 contextBridge.exposeInMainWorld('versions', process.versions);
 
-
+contextBridge.exposeInMainWorld('appdb', (c) => {
+  console.log(c);
+});

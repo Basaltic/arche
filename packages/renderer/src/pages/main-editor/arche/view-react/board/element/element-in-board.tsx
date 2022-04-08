@@ -1,12 +1,29 @@
 import cs from 'classnames';
 import React, { useRef } from 'react';
-import { useNodeBinding, useObserveElementMeta, useObserveElementPosition, useObserveElementLoad } from '../../hooks/node.hooks';
+import { useObserveElementMeta, useObserveElementPosition, useObserveElementLoad } from '../../hooks/node.hooks';
 import { elementRegistry } from './element-registry';
 import { useElementDrag } from './use-element-drag';
 import { useElementSelection } from './use-element-selection';
 
 export type TElementInBoardProps = {
   id: string;
+};
+
+/**
+ * Element Wrapper In Board
+ */
+export const ElementInBoard = (props: TElementInBoardProps) => {
+  const { id } = props;
+
+  const isLoaded = useObserveElementLoad(id);
+
+  const isEmpty = !isLoaded;
+
+  if (isEmpty) {
+    return null;
+  }
+
+  return <ElementInBoardMain id={id} />;
 };
 
 export const ElementInBoardMain = (props: TElementInBoardProps) => {
@@ -46,21 +63,4 @@ export const ElementInBoardMain = (props: TElementInBoardProps) => {
       <div ref={draggableRef}>{ElementView && <ElementView where="default" id={id} isSelected={selection.isSelected} />}</div>
     </div>
   );
-};
-
-/**
- * Element Wrapper In Board
- */
-export const ElementInBoard = (props: TElementInBoardProps) => {
-  const { id } = props;
-
-  const isLoaded = useObserveElementLoad(id);
-
-  const isEmpty = !isLoaded;
-
-  if (isEmpty) {
-    return null;
-  }
-
-  return <ElementInBoardMain id={id} />;
 };

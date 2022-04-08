@@ -52,5 +52,6 @@ export function useCurrentPresentNodeId() {
   }
 
   return {
+    getPresentNodeId: () => {},
   };
 }

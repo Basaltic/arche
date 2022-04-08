@@ -1,13 +1,12 @@
 import * as Y from 'yjs';
-import type { SyncableDoc } from '../model/syncable-doc';
-import type { ArcheEditorState } from '../state/state';
-import type { IProvider } from './provider.interface';
 import { getDocUseCase } from '/@/domain/hooks';
+import type { SyncableDoc } from '../model/syncable-doc';
+import type { IProvider } from './provider.interface';
 
 /**
  * 本地同步
  */
-export class LocalPersistenceProvider implements IProvider {
+export class PersistenceProvider implements IProvider {
   private docUseCase;
 
   constructor() {
@@ -44,17 +43,6 @@ export class LocalPersistenceProvider implements IProvider {
         doc.on('destroy', this.destory.bind(this));
       });
     }
-  }
-
-  /**
-   * 绑定全局状态监听事件
-   *
-   * @param state
-   */
-  async bindGlobal(state: ArcheEditorState) {
-    state.events.on('doc:delete', () => {
-      // TODO: 触发文档的删除
-    });
   }
 
   /**
