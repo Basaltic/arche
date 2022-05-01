@@ -2,15 +2,15 @@ import './index.css';
 import 'overlayscrollbars/css/OverlayScrollbars.css';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { App } from './app';
 
-const place = document.getElementById('app');
+const container = document.getElementById('app') as HTMLDivElement;
+const root = createRoot(container);
 
-ReactDOM.render(
+root.render(
   <BrowserRouter>
     <App />
   </BrowserRouter>,
-  place
 );

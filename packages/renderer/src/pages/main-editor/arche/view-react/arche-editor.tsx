@@ -17,9 +17,15 @@ import { Menu } from './menu';
 export const ArcheEditor = (props: { uid: string }) => {
   const { uid } = props;
 
-  const { data } = useSWR('init-state', () => {
-    return new KnowledgeBaseEditorState({ uid, knowledgeBaseId: uid });
-  });
+  const { data } = useSWR(
+    'init-state',
+    () => {
+      return new KnowledgeBaseEditorState({ uid, knowledgeBaseId: uid });
+    },
+    { suspense: true },
+  );
+
+  console.log(data);
 
   return (
     <DndProvider backend={HTML5Backend}>

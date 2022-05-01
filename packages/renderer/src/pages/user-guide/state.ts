@@ -1,5 +1,5 @@
 import { useFormContext } from 'react-hook-form';
-import { createStore } from 'rethos';
+import create, { useStore } from 'zustand';
 
 /**
  * User Guide Page Form Value Def
@@ -32,8 +32,9 @@ export const defaultUserGruideState: TUserGuideState = {
   step: 0,
 };
 
-export const [useUserGuideState, useUserGuideAction] = createStore(defaultUserGruideState, {
-  nextStep: (state: TUserGuideState) => {
-    state.step += 1;
-  },
-});
+export const useGuideStoe = create<TUserGuideState>((set) => ({
+  step: 0,
+  nextStep: () => set((state) => ({ step: state.step + 1 })),
+}));
+
+export const useUserGuideState = () => useStore(useGuideStoe);

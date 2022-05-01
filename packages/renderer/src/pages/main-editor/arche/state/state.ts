@@ -63,7 +63,7 @@ export class KnowledgeBaseEditorState {
   selection: Selection;
 
   constructor(opts: TKnowledgeBaseEditorStateOpts) {
-    const { uid, providers = [] } = opts;
+    const { uid } = opts;
 
     // - 初始化provider
     const localPersistenceProvider = new PersistenceProvider();
