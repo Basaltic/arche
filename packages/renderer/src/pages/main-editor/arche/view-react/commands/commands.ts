@@ -1,6 +1,6 @@
-import { TSyncableNodeMeta } from '../../model/syncable-node';
-import { Operations } from '../../state/operations';
-import { TElement } from '../board/element/element.types';
+import type { TSyncableNodeMeta } from '../../model/syncable-node';
+import type { Operations } from '../../state/operations';
+import type { TElement } from '../board/element/element.types';
 
 /**
  * Append New Element to list end

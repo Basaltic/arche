@@ -1,5 +1,6 @@
 import type * as Y from 'yjs';
-import { SyncableDoc, TSyncableDocOpts } from './syncable-doc';
+import type { TSyncableDocOpts } from './syncable-doc';
+import { SyncableDoc } from './syncable-doc';
 
 export type TNodeEventType = 'change:meta' | 'change:state';
 
@@ -41,6 +42,7 @@ export type TSetableValus = {
   meta?: Partial<TSyncableNodeMeta> & Record<string, any>;
   state?: Record<string, any>;
   position?: TSyncableNodePostiion;
+  [key: string]: any;
 };
 
 /**
@@ -52,7 +54,7 @@ export class SyncableNode extends SyncableDoc {
   constructor(opts: TSyncableNodeOpts) {
     super(opts);
 
-    this.meta = this.getMap<any>('meta');
+    this.meta = this.getMap<TSyncableNodeMeta>('meta');
     this.getMap<any>('state');
     this.getMap<any>('position');
 
@@ -89,26 +91,21 @@ export class SyncableNode extends SyncableDoc {
    * @param partialMeta
    * @param partialState
    */
-  setup(partialMeta: Partial<TSyncableNodeMeta> & Record<string, any>, partialState: Record<string, any>, partialPos: Record<string, any>) {
-    const meta = this.getMap('meta') as Y.Map<any>;
-    const state = this.getMap('state') as Y.Map<any>;
-    const position = this.getMap('position') as Y.Map<any>;
+  setAll(values: TSetableValus) {
+    const doTransactions = () => {
+      for (const vkey of Object.keys(values)) {
+        if (values[vkey]) {
+          const map = this.getMap(vkey);
+          const keys = Object.keys(values[vkey]);
+          for (const key of keys) {
+            map.set(key, values[vkey][key]);
+          }
+        }
+      }
+    };
 
     this.transact(() => {
-      let keys = Object.keys(partialMeta);
-      for (const key of keys) {
-        meta.set(key, partialMeta[key]);
-      }
-
-      keys = Object.keys(partialState);
-      for (const key of keys) {
-        state.set(key, partialState[key]);
-      }
-
-      keys = Object.keys(partialPos);
-      for (const key of keys) {
-        position.set(key, partialPos[key]);
-      }
+      doTransactions();
     });
   }
 
@@ -119,7 +116,6 @@ export class SyncableNode extends SyncableDoc {
     const position = this.getMap('position') as Y.Map<any>;
     this.transact(() => {
       const keys = Object.keys(partialPos);
-      // console.log(keys, partialPos);
       for (const key of keys) {
         position.set(key, partialPos[key]);
       }

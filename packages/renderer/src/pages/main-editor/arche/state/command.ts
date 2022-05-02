@@ -1,5 +1,5 @@
-import { Operations } from './operations';
-import { KnowledgeBaseEditorState } from './state';
+import type { Operations } from './operations';
+import type { KnowledgeBaseEditorState } from './state';
 
 /**
  * A command is just a pure function

@@ -26,6 +26,9 @@ export type TUser = {
   name: string;
 };
 
+/**
+ * 用户的配置，可以不断的扩充
+ */
 export type TUserSetting = {
   /**
    * 用户ID

@@ -86,6 +86,7 @@ export class Operations {
   }
 
   /**
+   * 插入新的节点，在列表末尾
    *
    * @param parentNodeId
    * @param meta

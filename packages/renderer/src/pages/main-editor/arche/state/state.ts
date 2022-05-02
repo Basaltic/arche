@@ -5,7 +5,8 @@ import { History } from '../model/history';
 import { SyncableDocCollection } from '../model/syncable-doc-collection';
 import { SyncableDocFactory } from '../model/factory';
 import { Operations } from './operations';
-import { IProvider, ProviderManager } from '../provider/provider.interface';
+import type { IProvider } from '../provider/provider.interface';
+import { ProviderManager } from '../provider/provider.interface';
 import { PersistenceProvider } from '../provider/local-provider';
 
 export type TEditorStateEventType = 'update:node' | 'update:tree';
@@ -128,7 +129,9 @@ export class KnowledgeBaseEditorState {
 
     try {
       command(this.operations);
-    } catch (e) {}
+    } catch (e) {
+      console.error(e);
+    }
 
     this.history.commit();
   }

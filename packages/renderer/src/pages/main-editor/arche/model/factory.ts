@@ -1,8 +1,9 @@
 import { generateId } from '../base/id';
-import { IProvider } from '../provider/provider.interface';
-import { History } from './history';
-import { SyncableDocCollection } from './syncable-doc-collection';
-import { SyncableNode, TSyncableNodeMeta } from './syncable-node';
+import type { IProvider } from '../provider/provider.interface';
+import type { History } from './history';
+import type { SyncableDocCollection } from './syncable-doc-collection';
+import type { TSyncableNodeMeta, TSyncableNodePostiion } from './syncable-node';
+import { SyncableNode } from './syncable-node';
 import { SyncableNodeFragment } from './syncable-node-fragment';
 
 export type TSyncableFactorynOpts = {
@@ -33,7 +34,7 @@ export class SyncableDocFactory {
    * @param state
    * @returns
    */
-  createNode(id?: string, opts?: { meta?: TSyncableNodeMeta; state?: Record<string, any>; position?: Record<string, any> }) {
+  createNode(id?: string, opts?: { meta?: TSyncableNodeMeta; state?: Record<string, any>; position?: TSyncableNodePostiion }) {
     const { meta, state, position } = opts || {};
     const isNew = Boolean(!id && meta && state);
 
@@ -45,18 +46,7 @@ export class SyncableDocFactory {
     this.provider?.bind(syncableNode);
 
     // 3. 初始数据设置
-    if (meta && state && position) {
-      syncableNode.setup(meta, state, position);
-    } else if (meta) {
-      const now = new Date().getTime();
-      meta.createdTime = now;
-      meta.lastModified = now;
-      syncableNode.setMeta(meta);
-    } else if (state) {
-      syncableNode.setState(state);
-    } else if (position) {
-      syncableNode.setPosition(position);
-    }
+    syncableNode.setAll({ meta, state, position });
 
     // 4. undo manager 绑定
     this.history?.bind(syncableNode);

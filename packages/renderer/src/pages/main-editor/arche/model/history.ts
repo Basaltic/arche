@@ -1,5 +1,5 @@
 import { UndoManager } from 'yjs';
-import { SyncableDoc } from './syncable-doc';
+import type { SyncableDoc } from './syncable-doc';
 
 // TODO: 两种mutation
 // 1. 内容的变更 - 使用 undo manage 实现，只要记录doc id即可
