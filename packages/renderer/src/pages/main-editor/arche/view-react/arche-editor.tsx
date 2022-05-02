@@ -22,10 +22,8 @@ export const ArcheEditor = (props: { uid: string }) => {
     () => {
       return new KnowledgeBaseEditorState({ uid, knowledgeBaseId: uid });
     },
-    { suspense: true },
+    { suspense: true, refreshWhenHidden: false, refreshWhenOffline: false },
   );
-
-  console.log(data);
 
   return (
     <DndProvider backend={HTML5Backend}>

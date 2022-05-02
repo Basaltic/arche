@@ -5,9 +5,8 @@ import React from 'react';
  */
 export function PageLoading() {
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      <div className="radial-progress" />
-      <div>加载中</div>
+    <div className="w-full h-full center">
+      <div className="radial-progress animate-spin" style={{ '--value': 50, '--size': '3rem' } as any} />
     </div>
   );
 }

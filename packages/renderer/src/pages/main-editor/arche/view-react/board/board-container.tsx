@@ -10,7 +10,7 @@ import { useSelection } from '../hooks/editor.hooks';
  * @param props
  * @returns
  */
-export const BoardContainer = (props: JSX.ElementChildrenAttribute) => {
+export const BoardContainer = (props: { children: React.ReactNode }) => {
   const { children } = props;
   const ref = useRef(null);
 
@@ -34,7 +34,7 @@ export const BoardContainer = (props: JSX.ElementChildrenAttribute) => {
   return (
     <div
       ref={ref}
-      className="relative w-full h-full overflow-auto z-0 bg-slate-300"
+      className="relative w-full h-full overflow-auto z-0 bg-slate-300 drawer drawer-end"
       style={{ backgroundImage: `url(${bgSvg})` }}
       onClick={onClick}
     >

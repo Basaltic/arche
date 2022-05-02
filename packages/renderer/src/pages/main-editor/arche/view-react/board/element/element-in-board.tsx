@@ -42,6 +42,8 @@ export const ElementInBoardMain = (props: TElementInBoardProps) => {
     selection.select();
   };
 
+  console.log('current ele ===> ', id, position);
+
   const element = elementRegistry.get(meta?.type);
   const ElementView = element?.view;
 

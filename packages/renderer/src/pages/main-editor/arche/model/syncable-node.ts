@@ -24,13 +24,7 @@ export type TSyncableNodeMeta = {
 };
 
 export type TSyncableNodePostiion = {
-  /**
-   *
-   */
   x: number;
-  /**
-   *
-   */
   y: number;
 };
 

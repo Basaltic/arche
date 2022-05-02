@@ -1,6 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
+import { useNavigate } from 'react-router-dom';
 import { useAppUseCase, useUserUseCase } from '../..//domain/hooks';
 
 /**

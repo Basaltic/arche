@@ -30,7 +30,7 @@ export const StepWelcome = memo(() => {
       <p className="mt-2 text-xl text-slate-500">易用且强大的个人知识库工具，可以轻松的构建并管理您个人的知识体系</p>
       <div className="mt-12">
         <Button width="wide" loading={loading} onClick={handleClickToInitialize}>
-          全新开始
+          开始使用
         </Button>
         {/* TODO: 同步已有数据 */}
       </div>

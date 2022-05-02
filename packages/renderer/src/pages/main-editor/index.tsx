@@ -12,7 +12,7 @@ export function MainEditorPage() {
 
   return (
     <Suspense fallback={<PageLoading />}>
-      <ArcheEditor uid={uid || ''} />;
+      <ArcheEditor uid={uid || ''} />
     </Suspense>
   );
 }

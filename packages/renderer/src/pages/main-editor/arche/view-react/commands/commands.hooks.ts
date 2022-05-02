@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { TCommand } from '../../state/command';
+import type { TCommand } from '../../state/command';
 import { useArcheEditorState } from '../hooks/editor.hooks';
 
 import * as commands from './commands';

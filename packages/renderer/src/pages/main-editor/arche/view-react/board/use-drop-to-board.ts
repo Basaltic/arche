@@ -26,7 +26,7 @@ export function useDropToBoard(dropAreaContainerRef: React.RefObject<HTMLDivElem
         // 1. 有id表示是已经存在的元素，移动之，否则新建之
         // 如果有多个选中的，需要更改所有被选中的元素的位置
         const currentOffset = monitor.getSourceClientOffset() as XYCoord;
-        const initialOffset = monitor.getInitialSourceClientOffset() as XYCoord;
+        // const initialOffset = monitor.getInitialSourceClientOffset() as XYCoord;
 
         // const deltaOffset = { x: currentOffset.x - initialOffset.x, y: currentOffset.y - initialOffset.y };
         commandExecutor.execute(commands.moveElement(draggingNodeId, currentOffset.x, currentOffset.y));
