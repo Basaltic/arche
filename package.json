@@ -1,12 +1,14 @@
 {
   "name": "arche",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "description": "A Personalized Knowledge Base App",
   "private": true,
   "engines": {
     "node": ">=v16.13",
     "npm": ">=8.1"
   },
   "main": "packages/main/dist/index.cjs",
+  "author": "Lei Chen",
   "scripts": {
     "build": "npm run build:main && npm run build:preload && npm run build:renderer",
     "build:main": "cd ./packages/main && vite build",

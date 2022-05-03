@@ -37,7 +37,7 @@ function ElementMenuButton(props: TElement) {
 
   return (
     <div className="flex flex-col items-center" onClick={clickToAddElement}>
-      <div className="p-1 bg-base-100 rounded-md shadow-xl">{icon}</div>
+      <div className="p-1 bg-white rounded-md shadow-xl">{icon}</div>
       <div className="mt-1 text-xs">{name}</div>
     </div>
   );
