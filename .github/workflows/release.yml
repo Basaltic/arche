@@ -1,8 +1,8 @@
 name: Release
 on:
   push:
-    branches:
-      - main
+    tags:
+      - "v*.*.*"
     paths-ignore:
       - '**.md'
       - '**.spec.js'
@@ -79,7 +79,7 @@ jobs:
       matrix:
         # os: [ windows-latest ]
     #    To compile the application for different platforms, use:
-       os: [ windows-latest ]
+       os: [ windows-latest, macos-latest ]
 
     runs-on: ${{ matrix.os }}
 
@@ -134,5 +134,7 @@ jobs:
           # mac_certs: ''
 
           # Password for decrypting `mac_certs`
-          mac_certs_password: ''
+          mac_certs: ${{ secrets.mac_certs }}
+          mac_certs_password: ${{ secrets.mac_certs_password }}
+
 
