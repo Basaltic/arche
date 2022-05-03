@@ -79,7 +79,7 @@ jobs:
       matrix:
         # os: [ windows-latest ]
     #    To compile the application for different platforms, use:
-       os: [ macos-latest, windows-latest ]
+       os: [ windows-latest ]
 
     runs-on: ${{ matrix.os }}
 
@@ -134,5 +134,5 @@ jobs:
           # mac_certs: ''
 
           # Password for decrypting `mac_certs`
-          # mac_certs_password: ''
+          mac_certs_password: ''
 
