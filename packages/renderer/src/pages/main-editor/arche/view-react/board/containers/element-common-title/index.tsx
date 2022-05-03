@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCommands, useCommandExecutor } from '../../../commands/commands.hooks';
-import { useObserveElementMeta } from '../../../hooks/node.hooks';
+import { useObserveElementState } from '../../../hooks/node.hooks';
 import { EditableTitle } from '/@/components/editable-title';
 
 export const ElementCommonTitle = (props: { id: string }) => {
@@ -8,7 +8,7 @@ export const ElementCommonTitle = (props: { id: string }) => {
 
   const commands = useCommands();
   const commandExecutor = useCommandExecutor();
-  const { name } = useObserveElementMeta(id);
+  const { title } = useObserveElementState(id);
 
   /**
    * 提交修改画板标题
@@ -16,7 +16,7 @@ export const ElementCommonTitle = (props: { id: string }) => {
    * @param value
    * @returns
    */
-  const submitToChangeTitle = (value: string) => commandExecutor.execute(commands.changeMeta(id, { name: value }));
+  const submitToChangeTitle = (value: string) => commandExecutor.execute(commands.changeState(id, { title: value }));
 
   /**
    * 点击Enter
@@ -33,5 +33,6 @@ export const ElementCommonTitle = (props: { id: string }) => {
   const onBlur = (title: string) => {
     submitToChangeTitle(title);
   };
-  return <EditableTitle title={name} onBlur={onBlur} onEnter={onEnter} />;
+
+  return <EditableTitle title={title} onBlur={onBlur} onEnter={onEnter} />;
 };

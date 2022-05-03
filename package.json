@@ -1,5 +1,6 @@
 {
   "name": "arche",
+  "version": "0.0.1",
   "private": true,
   "engines": {
     "node": ">=v16.13",
@@ -12,7 +13,7 @@
     "build:preload": "cd ./packages/preload && vite build",
     "build:preload:types": "dts-cb -i 'packages/preload/src/**/*.ts' -o 'packages/preload/exposedInMainWorld.d.ts'",
     "build:renderer": "cd ./packages/renderer && vite build",
-    "compile": "cross-env MODE=production npm run build && electron-builder build --config .electron-builder.config.js --dir --config.asar=false",
+    "compile": "cross-env MODE=production npm run build && electron-builder build --config .electron-builder.config.js --dir --config.asar=true",
     "test": "npm run test:main && npm run test:preload && npm run test:renderer && npm run test:e2e",
     "test:e2e": "npm run build && vitest run",
     "test:main": "vitest run -r packages/main --passWithNoTests",
@@ -40,7 +41,7 @@
     "cross-env": "7.0.3",
     "dts-for-context-bridge": "0.7.1",
     "electron": "18.0.3",
-    "electron-builder": "22.14.13",
+    "electron-builder": "23.0.3",
     "electron-devtools-installer": "3.2.0",
     "eslint": "8.12.0",
     "happy-dom": "2.55.0",

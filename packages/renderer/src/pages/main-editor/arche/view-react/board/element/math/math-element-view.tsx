@@ -4,10 +4,9 @@ import React, { memo, useCallback, useEffect, useRef, useState } from 'react';
 import type { TElementViewProps } from '../element.types';
 import type { TMathElementState } from '.';
 import katex from 'katex';
-import { useObserveElementMeta, useObserveElementState } from '../../../hooks/node.hooks';
+import { useObserveElementState } from '../../../hooks/node.hooks';
 import { debounce } from 'lodash';
 import { useCommandExecutor, useCommands } from '../../../commands/commands.hooks';
-import { EditableTitle } from '/@/components/editable-title';
 import { ElementCommonTitle } from '../../containers/element-common-title';
 
 /**
@@ -44,8 +43,11 @@ export const ViewStatic = (props: TElementViewProps) => {
   }, [formula]);
 
   return (
-    <div className="relative bg-white shadow-inner">
-      <div className="relative p-1 flex items-center rounded-md">
+    <div className="relative rounded-md bg-white shadow-inner" style={{ minWidth: 200 }}>
+      <div className="pt-2 m-auto text-center" style={{ maxWidth: '90%' }}>
+        <ElementCommonTitle id={id} />
+      </div>
+      <div className="relative p-2 flex items-center">
         <div ref={katexEle}></div>
       </div>
     </div>

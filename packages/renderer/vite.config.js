@@ -25,7 +25,7 @@ const config = {
     },
   },
   build: {
-    sourcemap: true,
+    sourcemap: false,
     target: `chrome${chrome}`,
     outDir: 'dist',
     assetsDir: '.',
