@@ -77,26 +77,21 @@ jobs:
 
     strategy:
       matrix:
-        os: [ windows-latest ]
+        # os: [ windows-latest ]
     #    To compile the application for different platforms, use:
-    #    os: [ macos-latest, ubuntu-latest, windows-latest ]
+       os: [ macos-latest, ubuntu-latest, windows-latest ]
 
     runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v2
 
-      # - uses: actions/setup-node@v2
-      #   with:
-      #     node-version: 16 # Need for npm >=7.7
-      #     cache: 'npm'
-      - uses: pnpm/action-setup@v2.1.0
+      - uses: actions/setup-node@v2
         with:
-          # node-version: 16
-          version: 6.32.2
-
+          node-version: 16 # Need for npm >=7.7
+          cache: 'npm'
       - name: Install dependencies
-        run: pnpm install
+        run: npm ci
 
       # The easiest way to transfer release notes to a compiled application is create `release-notes.md` in the build resources.
       # See https://github.com/electron-userland/electron-builder/issues/1511#issuecomment-310160119
@@ -140,3 +135,4 @@ jobs:
 
           # Password for decrypting `mac_certs`
           # mac_certs_password: ''
+
